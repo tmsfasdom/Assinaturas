@@ -36,7 +36,7 @@ public class App {
 		}
 		ExibeCertificados(Utils.lerArquivoBin(caminhoBinario));
 
-		System.out.println("Finalizado com sucesso");
+		System.out.println("Finalizado com sucesso novo");
 	}
 
 	private static void ExibeCertificados(byte[] dados) throws Exception {

@@ -6,20 +6,34 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
+import java.security.MessageDigest;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSSignedDataParser;
+import org.bouncycastle.cms.SignerInformation;
+import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 
 public class Utils {
 
+	public static String retornaHashSHA1SobreOriginal(String CNAB240) throws Exception {
+		MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+		sha1.update(CNAB240.getBytes());
+		byte[] digest = sha1.digest();
+		String hash = String.format("%1$040x", new BigInteger(1, digest));
+		return hash;
+	}
+
 	public static String retornaDadosCNAB240(byte[] dados) throws Exception {
-		
+		Security.addProvider(new BouncyCastleProvider());
 		CMSSignedDataParser sdp = new CMSSignedDataParser(
 				new JcaDigestCalculatorProviderBuilder().setProvider("BC").build(), dados);
 		String retornoCNAB240 = new String(lerInputStreamToByte(sdp.getSignedContent().getContentStream()));

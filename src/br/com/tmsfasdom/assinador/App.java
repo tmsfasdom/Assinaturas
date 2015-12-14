@@ -27,8 +27,8 @@ public class App {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		File caminhoProjeto = new File(".");
-		String caminho = caminhoProjeto.getAbsolutePath() + "/src/main/resources/files/REMESSA.txt"; 
-		String caminhoBinario = caminhoProjeto.getAbsolutePath() + "/src/main/resources/files/REMESSA.bin";
+		String caminho = caminhoProjeto.getAbsolutePath() + "/src/main/resources/files/REMESSA2.txt"; 
+		String caminhoBinario = caminhoProjeto.getAbsolutePath() + "/src/main/resources/files/REMESSA2.bin";
 		List<String> dadosLidos = Utils.lerArquivoTxt(caminho);
 		Utils.removeInicioFimPKCS(dadosLidos);
 		for (String str : dadosLidos) {
@@ -40,10 +40,12 @@ public class App {
 	}
 
 	private static void ExibeCertificados(byte[] dados) throws Exception {
-
 		Security.addProvider(new BouncyCastleProvider());
 		String str = Utils.retornaDadosCNAB240(dados);
+		String str2 = Utils.retornaHashSHA1SobreOriginal(str);
 		System.out.println(str);
+		System.out.println(str2);
+		
 
 		// CMSSignedDataParser sp = new CMSSignedDataParser(
 		// new JcaDigestCalculatorProviderBuilder().setProvider("BC").build(),
